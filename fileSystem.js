@@ -14,7 +14,6 @@ function getNormalFlashcards() {
     return returnArray;
 }
 
-
 function storeClozeFlashcard(wholeSentence, removeThisPart) {
     // TODO read the file - if first entry do not add the pre-terminator
     fs.appendFile("clozeFlashcards.txt",'~/~' + wholeSentence + ";" + removeThisPart,  function(error, data) {
