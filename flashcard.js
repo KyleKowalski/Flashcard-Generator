@@ -1,10 +1,7 @@
-
-
 function NormalFlashcard (front, back) {
     this.front = front;
     this.back = back;
 }
-
 
 function ClozeFlashcard (wholeSentence, removeThisPart) {
     this.wholeSentence = wholeSentence;
