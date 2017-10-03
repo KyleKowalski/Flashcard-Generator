@@ -11,19 +11,19 @@
     createActualClozeFlashcards();
 
     // examples of creating normal flashcards
-    // createAndStoreNormalFlashcard('','');
-    // createAndStoreNormalFlashcard('1','');
-    // createAndStoreNormalFlashcard('','1');
-    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017');
+    createAndStoreNormalFlashcard('',''); // Fails - no front card
+    createAndStoreNormalFlashcard('1',''); // Fails - no back card
+    createAndStoreNormalFlashcard('','1'); // Fails - no front card
+    createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
 
     console.log(normalFlashcardArray);
 
     // examples of creating cloze cards
-    // createAndStoreClozeFlashcard('','');
-    // createAndStoreClozeFlashcard('1','');
-    // createAndStoreClozeFlashcard('','1');
-    // createAndStoreClozeFlashcard('This card was created in the year 2017','2016');
-    // createAndStoreClozeFlashcard('This card was created in the year 2017','2017');
+    // createAndStoreClozeFlashcard('',''); // Fails - no sentence
+    // createAndStoreClozeFlashcard('1',''); // Fails - no item to remove
+    // createAndStoreClozeFlashcard('','1'); // Fails - no sentence
+    // createAndStoreClozeFlashcard('This card was created in the year 2017','2016'); // Fails - item not contained in sentence
+    // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Success
 
     console.log(clozeFlashcardArray);
 
@@ -37,6 +37,7 @@
             return false;
         }
         else {
+            console.log(`Creating card using front: '${frontOfCard}' and back: '${backOfCard}'.`)
             fileSystem.storeNormalFlashcard(frontOfCard, backOfCard);
             normalStoredFlashcardArray = fileSystem.getNormalFlashcards;
             createActualNormalFlashcards();
@@ -53,14 +54,15 @@
 
     function createAndStoreClozeFlashcard(wholeSentence, removeThisPart) {
         if (wholeSentence === '') {
-            console.log(`Front of card was empty - please fill this out first`);
+            console.log(`Sentence part was empty - please fill this out first`);
             return false;
         }
         else if (removeThisPart === '') {
-            console.log(`Back of card was empty - please fill this out first`);
+            console.log(`Item to remove was empty - please fill this out first`);
             return false;
         }
         else if (wholeSentence.includes(removeThisPart)) {
+            console.log(`Creating card using '${removeThisPart}' removed from '${wholeSentence}'.`)
             fileSystem.storeClozeFlashcard(wholeSentence, removeThisPart);
             clozeStoredFlashcardArray = fileSystem.getClozeFlashcards;
             createActualClozeFlashcards();
