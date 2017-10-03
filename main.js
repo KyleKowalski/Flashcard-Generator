@@ -46,7 +46,7 @@
     function createActualNormalFlashcards() {
         normalFlashcardArray = [];
         for (var i = 0; i < normalStoredFlashcardArray.length; i++) {
-            var cardArray = normalStoredFlashcardArray[i].split(';');
+            var cardArray = normalStoredFlashcardArray[i].split('~;~');
             normalFlashcardArray[i] = new flashcard.NormalFlashcard(cardArray[0],cardArray[1]);
         }
     }
@@ -74,7 +74,7 @@
     function createActualClozeFlashcards() {
         clozeFlashcardArray = [];
         for (var i = 0; i < clozeStoredFlashcardArray.length; i++) {
-            var cardArray = clozeStoredFlashcardArray[i].split(';');
+            var cardArray = clozeStoredFlashcardArray[i].split('~;~');
             clozeFlashcardArray[i] = new flashcard.ClozeFlashcard(cardArray[0],cardArray[1]); 
         }
     }

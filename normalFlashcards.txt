@@ -1,1 +1,1 @@
-front;back~/~The front;The Back~/~Ergh;Well Next?~/~What year is it (when this was written)?;2017
+front~;~back~/~The front~;~The Back~/~Ergh~;~Well Next?~/~What year is it (when this was written)?~;~2017
