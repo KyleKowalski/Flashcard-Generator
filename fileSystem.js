@@ -1,56 +1,44 @@
 var fs = require('fs');
 
-function storeNormalFlashcard(front,back) {
+function storeFlashcard(front,back, sourceFile) {
     // read the file - if first entry do not add the pre-terminator
-    var storeThisText = '~/~' + front + "~;~" + back;
-    var checkArrayLength = getNormalFlashcards();
-    if (checkArrayLength[0].length === 0) {
-        storeThisText = front + "~;~" + back
+    var storeThisText = '~/~' + front + '~;~' + back;
+    var checkString = getFlashcardFile(sourceFile).toString();
+    console.log(`Check array length: '${checkString}'`);
+    if (checkString === '') {
+        storeThisText = front + '~;~' + back
     } 
-
-    fs.appendFile("normalFlashcards.txt", storeThisText,  function(error, data) {
-        if (error) {
-          return console.log(error);
-        }
-  });
+    var saveThis = checkToSeeIfCardAlreadyExists(front, back, sourceFile)
+    if (saveThis) {
+        fs.appendFile(sourceFile, storeThisText,  function(error, data) {
+            if (error) {
+                return console.log(error);
+            }
+        });
+    }
 }
 
-storeNormalFlashcard('front', 'back')
+// storeFlashcard('front', 'back', 'normalFlashcards.txt');
+// storeFlashcard('front', 'back', 'normalFlashcards.txt');
 
-function getNormalFlashcards() {
-    var returnArray = readFile('normalFlashcards.txt');
-    return returnArray;
-}
-
-function storeClozeFlashcard(wholeSentence, removeThisPart) {
-    // read the file - if first entry do not add the pre-terminator
-    var storeThisText = '~/~' + wholeSentence + "~;~" + removeThisPart;
-    var checkArrayLength = getClozeFlashcards();
-    if (checkArrayLength[0].length === 0) {
-        storeThisText = wholeSentence + "~;~" + removeThisPart
-    } 
-
-    fs.appendFile("clozeFlashcards.txt", storeThisText,  function(error, data) {
-        if (error) {
-          return console.log(error);
-        }
-    });
-}
-
-function getClozeFlashcards() {
-    var returnArray = readFile('clozeFlashcards.txt');
-    return returnArray;
-}
-
-function readFile(fileName) {
-    var data = fs.readFileSync(fileName, "utf8");
+function getFlashcardFile(fileName) {
+    var data = fs.readFileSync(fileName, 'utf8');
     var dataArray = data.split('~/~');
     return dataArray;
 }
 
+function checkToSeeIfCardAlreadyExists(firstPart, secondPart, sourceFile) {
+    var checkThisText = firstPart + '~;~' + secondPart;
+    var fileText = getFlashcardFile(sourceFile);
+    var returnThis = true;
+    if (fileText.includes(checkThisText)) {
+        console.log("This appears to be a duplicate - so we're not saving it.")
+        returnThis = false;
+    }
+    return returnThis;
+}
+
 module.exports = {
-    storeNormalFlashcard: storeNormalFlashcard,
-    getNormalFlashcards: getNormalFlashcards,
-    storeClozeFlashcard: storeClozeFlashcard,
-    getClozeFlashcards:  getClozeFlashcards
+    storeFlashcard: storeFlashcard,
+    getFlashcardFile: getFlashcardFile
 }

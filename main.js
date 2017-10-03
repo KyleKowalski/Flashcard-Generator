@@ -3,10 +3,10 @@
     var flashcard = require('./flashcard.js');
     var fileSystem = require('./fileSystem.js');
 
-    var normalStoredFlashcardArray = fileSystem.getNormalFlashcards();
+    var normalStoredFlashcardArray = fileSystem.getFlashcardFile('normalFlashcards.txt');
     var normalFlashcardArray = [];
     createActualNormalFlashcards();
-    var clozeStoredFlashcardArray = fileSystem.getClozeFlashcards();
+    var clozeStoredFlashcardArray = fileSystem.getFlashcardFile('clozeFlashcards.txt');
     var clozeFlashcardArray = [];
     createActualClozeFlashcards();
 
@@ -15,6 +15,7 @@
     createAndStoreNormalFlashcard('1',''); // Fails - no back card
     createAndStoreNormalFlashcard('','1'); // Fails - no front card
     createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
+    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Fails - duplicate
 
     console.log(normalFlashcardArray);
 
@@ -24,6 +25,7 @@
     // createAndStoreClozeFlashcard('','1'); // Fails - no sentence
     // createAndStoreClozeFlashcard('This card was created in the year 2017','2016'); // Fails - item not contained in sentence
     // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Success
+    // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Fails - duplicate
 
     console.log(clozeFlashcardArray);
 
@@ -38,8 +40,8 @@
         }
         else {
             console.log(`Creating card using front: '${frontOfCard}' and back: '${backOfCard}'.`)
-            fileSystem.storeNormalFlashcard(frontOfCard, backOfCard);
-            normalStoredFlashcardArray = fileSystem.getNormalFlashcards;
+            fileSystem.storeFlashcard(frontOfCard, backOfCard, 'normalFlashcards.txt');
+            normalStoredFlashcardArray = fileSystem.getFlashcardFile('normalFlashcards.txt');
             createActualNormalFlashcards();
         }
     }
@@ -63,8 +65,8 @@
         }
         else if (wholeSentence.includes(removeThisPart)) {
             console.log(`Creating card using '${removeThisPart}' removed from '${wholeSentence}'.`)
-            fileSystem.storeClozeFlashcard(wholeSentence, removeThisPart);
-            clozeStoredFlashcardArray = fileSystem.getClozeFlashcards;
+            fileSystem.storeFlashcard(wholeSentence, removeThisPart, 'clozeFlashcards.txt');
+            clozeStoredFlashcardArray = fileSystem.getFlashcardFile('clozeFlashcards.txt');
             createActualClozeFlashcards();
         }
         else {
@@ -80,5 +82,4 @@
             clozeFlashcardArray[i] = new flashcard.ClozeFlashcard(cardArray[0],cardArray[1]); 
         }
     }
-
 })();
