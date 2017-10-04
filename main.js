@@ -11,11 +11,11 @@
     createActualClozeFlashcards();
 
     // examples of creating normal flashcards
-    createAndStoreNormalFlashcard('',''); // Fails - no front card
-    createAndStoreNormalFlashcard('1',''); // Fails - no back card
-    createAndStoreNormalFlashcard('','1'); // Fails - no front card
-    createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
-    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Fails - duplicate
+    // createAndStoreNormalFlashcard('',''); // Fails - no front card
+    // createAndStoreNormalFlashcard('1',''); // Fails - no back card
+    // createAndStoreNormalFlashcard('','1'); // Fails - no front card
+    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
+    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Fails - duplicate 
 
     console.log(normalFlashcardArray);
 

@@ -18,9 +18,6 @@ function storeFlashcard(front,back, sourceFile) {
     }
 }
 
-// storeFlashcard('front', 'back', 'normalFlashcards.txt');
-// storeFlashcard('front', 'back', 'normalFlashcards.txt');
-
 function getFlashcardFile(fileName) {
     var data = fs.readFileSync(fileName, 'utf8');
     var dataArray = data.split('~/~');
