@@ -4,7 +4,6 @@ function storeFlashcard(front,back, sourceFile) {
     // read the file - if first entry do not add the pre-terminator
     var storeThisText = '~/~' + front + '~;~' + back;
     var checkString = getFlashcardFile(sourceFile).toString();
-    console.log(`Check array length: '${checkString}'`);
     if (checkString === '') {
         storeThisText = front + '~;~' + back
     } 

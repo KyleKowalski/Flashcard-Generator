@@ -2,6 +2,7 @@
 
     var flashcard = require('./flashcard.js');
     var fileSystem = require('./fileSystem.js');
+    var inquirer = require('inquirer');
 
     var normalStoredFlashcardArray = fileSystem.getFlashcardFile('normalFlashcards.txt');
     var normalFlashcardArray = [];
@@ -10,20 +11,72 @@
     var clozeFlashcardArray = [];
     createActualClozeFlashcards();
 
-    // examples of creating normal flashcards - these should be run in sequence, not all at once.  :)
-    // createAndStoreNormalFlashcard('',''); // Fails - no front card
-    // createAndStoreNormalFlashcard('1',''); // Fails - no back card
-    // createAndStoreNormalFlashcard('','1'); // Fails - no front card
-    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
-    // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Fails - duplicate 
+    mainPrompt();
     
-    // examples of creating cloze cards - these should be run in sequence, not all at once.  :)
-    // createAndStoreClozeFlashcard('',''); // Fails - no sentence
-    // createAndStoreClozeFlashcard('1',''); // Fails - no item to remove
-    // createAndStoreClozeFlashcard('','1'); // Fails - no sentence
-    // createAndStoreClozeFlashcard('This card was created in the year 2017','2016'); // Fails - item not contained in sentence
-    // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Success
-    // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Fails - duplicate
+    function mainPrompt() {
+        inquirer.prompt([
+            {
+                type: "list",
+                message: "\n\n=====\nWelcome to the Flashcard Generator - please make a selection:\n=====",
+                choices: ["Normal Flashcard", "Cloze Flashcard", "List Normal Flashcards Array", "List Cloze Flashcards Array", "Quit"],
+                name: "mainPromptChoice"
+            }
+        ]).then(function(response) {
+            if (response.mainPromptChoice === 'Normal Flashcard') {
+                createFlashcard('normal');
+            }
+            else if (response.mainPromptChoice === 'Cloze Flashcard') {
+                createFlashcard('cloze');
+            }
+            else if (response.mainPromptChoice === 'List Normal Flashcards Array') {
+                console.log(normalFlashcardArray);
+                mainPrompt();
+            }
+            else if (response.mainPromptChoice === 'List Cloze Flashcards Array') {
+                console.log(clozeFlashcardArray);
+                mainPrompt();
+            }
+            else if (response.mainPromptChoice === 'Quit') {
+                quit();
+            }
+            else {
+                console.log("We've escaped the main prompt choice somehow - log an error")
+            }
+        })
+    }
+
+    function createFlashcard(cardType) {
+        var message1 = 'Please enter your entire sentence for a cloze flashcard:';
+        var message2 = 'Please enter the value to remove from said sentence (exact match is required):';
+        if (cardType === 'normal') {
+            message1 = 'Please enter the question for the front of the card (ie. Who was the first president of the United States?)';
+            message2 = 'Please enter the correct answer for said question.';
+        }
+        inquirer.prompt([
+            {
+                type: 'input',
+                message: message1,
+                name: 'firstCardPart'
+            },
+            {
+                type: 'input',
+                message: message2,
+                name: 'secondCardPart'
+            }
+        ]).then(function(response){
+            if (cardType === 'normal') {
+                createAndStoreNormalFlashcard(response.firstCardPart, response.secondCardPart);
+            }
+            else {
+                createAndStoreClozeFlashcard(response.firstCardPart, response.secondCardPart);
+            }
+            mainPrompt();
+        });
+    }
+
+    function quit() {
+        console.log("\n=====\nHave a great day!\n\nGood Bye!\n=====");
+    }
 
     function createAndStoreNormalFlashcard(frontOfCard, backOfCard) {
         if (frontOfCard === '') {
