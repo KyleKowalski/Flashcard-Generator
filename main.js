@@ -10,24 +10,20 @@
     var clozeFlashcardArray = [];
     createActualClozeFlashcards();
 
-    // examples of creating normal flashcards
+    // examples of creating normal flashcards - these should be run in sequence, not all at once.  :)
     // createAndStoreNormalFlashcard('',''); // Fails - no front card
     // createAndStoreNormalFlashcard('1',''); // Fails - no back card
     // createAndStoreNormalFlashcard('','1'); // Fails - no front card
     // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Success
     // createAndStoreNormalFlashcard('What year is it (when this was written)?','2017'); // Fails - duplicate 
-
-    console.log(normalFlashcardArray);
-
-    // examples of creating cloze cards
+    
+    // examples of creating cloze cards - these should be run in sequence, not all at once.  :)
     // createAndStoreClozeFlashcard('',''); // Fails - no sentence
     // createAndStoreClozeFlashcard('1',''); // Fails - no item to remove
     // createAndStoreClozeFlashcard('','1'); // Fails - no sentence
     // createAndStoreClozeFlashcard('This card was created in the year 2017','2016'); // Fails - item not contained in sentence
     // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Success
     // createAndStoreClozeFlashcard('This card was created in the year 2017','2017'); // Fails - duplicate
-
-    console.log(clozeFlashcardArray);
 
     function createAndStoreNormalFlashcard(frontOfCard, backOfCard) {
         if (frontOfCard === '') {
